@@ -3,136 +3,1389 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claren Davis Travel and Tour | Curated African Experiences</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Claren Davis Travel & Tour | Curated African Experiences</title>
+    <meta name="description" content="Claren Davis Travel & Tour curates unforgettable travel experiences across Africa. From Cotonou escapes to Nigerian adventures — paint & sip, beach camping, waterfalls and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
-        body { font-family: 'Poppins', sans-serif; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #C8A455;
+            --gold-light: #E8D5A3;
+            --gold-dark: #A8863A;
+            --dark: #0A0A0A;
+            --dark-lighter: #1A1A1A;
+            --cream: #FAF7F2;
+            --cream-dark: #F0EBE1;
+            --text: #2D2D2D;
+            --text-light: #6B6B6B;
+            --whatsapp: #25D366;
+            --whatsapp-dark: #128C7E;
+            --accent-warm: #D4724E;
+            --accent-teal: #2A9D8F;
+        }
+
+        html { scroll-behavior: smooth; font-size: 16px; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+        .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        /* ───── Preloader ───── */
+        #preloader {
+            position: fixed; inset: 0; z-index: 10000;
+            background: var(--dark);
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem; color: var(--gold);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        /* ───── Custom Cursor Glow ───── */
+        .cursor-glow {
+            width: 300px; height: 300px;
+            position: fixed; border-radius: 50%;
+            background: radial-gradient(circle, rgba(200,164,85,0.06) 0%, transparent 70%);
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: left 0.3s ease-out, top 0.3s ease-out;
+            display: none;
+        }
+        @media (hover: hover) { .cursor-glow { display: block; } }
+
+        /* ───── Navigation ───── */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav.scrolled {
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1rem 3rem;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+        .nav-logo {
+            display: flex; flex-direction: column; gap: 0;
+        }
+        .nav-logo-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem; font-weight: 700;
+            color: #fff; letter-spacing: 0.15em;
+            text-decoration: none; line-height: 1.2;
+        }
+        .nav-logo-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.55rem; letter-spacing: 0.4em;
+            text-transform: uppercase; color: var(--gold);
+            font-weight: 500;
+        }
+        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-links a {
+            color: rgba(255,255,255,0.7); text-decoration: none;
+            font-size: 0.8rem; letter-spacing: 0.12em;
+            text-transform: uppercase; font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute;
+            bottom: -4px; left: 0; width: 0; height: 1.5px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { color: #fff; }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            background: transparent !important;
+            border: 1.5px solid var(--gold) !important;
+            color: var(--gold) !important;
+            padding: 0.7rem 1.8rem !important;
+            font-size: 0.75rem !important;
+            letter-spacing: 0.15em !important;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease !important;
+            font-weight: 600 !important;
+            text-decoration: none;
+        }
+        .nav-cta:hover {
+            background: var(--gold) !important;
+            color: var(--dark) !important;
+        }
+        .nav-cta::after { display: none !important; }
+
+        /* Mobile menu */
+        .hamburger {
+            display: none; cursor: pointer;
+            flex-direction: column; gap: 5px;
+            background: none; border: none; padding: 5px;
+        }
+        .hamburger span {
+            width: 24px; height: 1.5px;
+            background: #fff; display: block;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .mobile-menu {
+            position: fixed; inset: 0; z-index: 999;
+            background: rgba(10,10,10,0.98);
+            backdrop-filter: blur(30px);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 2rem;
+            opacity: 0; visibility: hidden;
+            transition: all 0.5s ease;
+        }
+        .mobile-menu.active { opacity: 1; visibility: visible; }
+        .mobile-menu a {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem; color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .mobile-menu a:hover { color: var(--gold); }
+
+        /* ───── Hero ───── */
+        .hero {
+            position: relative; min-height: 100vh; min-height: 100dvh;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
         .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
+            position: absolute; inset: 0; z-index: 0;
+        }
+        .hero-bg img {
+            width: 100%; height: 100%; object-fit: cover;
+            transform: scale(1.05);
+            animation: heroZoom 20s ease-in-out infinite alternate;
+        }
+        @keyframes heroZoom {
+            0% { transform: scale(1.05); }
+            100% { transform: scale(1.15); }
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(10,10,10,0.4) 0%,
+                rgba(10,10,10,0.2) 40%,
+                rgba(10,10,10,0.5) 70%,
+                rgba(10,10,10,0.85) 100%
+            );
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative; z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(200,164,85,0.15);
+            border: 1px solid rgba(200,164,85,0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            margin-bottom: 2rem;
+        }
+        .hero-badge span {
+            font-size: 0.7rem; letter-spacing: 0.25em;
+            text-transform: uppercase; color: var(--gold);
+            font-weight: 600;
+        }
+        .hero-badge .dot {
+            width: 6px; height: 6px;
+            background: var(--gold); border-radius: 50%;
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+        .hero h1 {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            color: #fff; line-height: 1.08;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        .hero h1 .gold { color: var(--gold); }
+        .hero h1 em {
+            font-style: italic;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+        }
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: rgba(255,255,255,0.7);
+            max-width: 600px; margin: 0 auto 2.5rem;
+            line-height: 1.7; font-weight: 300;
+        }
+        .hero-btns {
+            display: flex; gap: 1rem;
+            justify-content: center; flex-wrap: wrap;
+        }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 0.7rem;
+            background: var(--gold); color: var(--dark);
+            padding: 1rem 2.5rem;
+            font-size: 0.8rem; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            text-decoration: none; border: none; cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(200,164,85,0.3); }
+        .btn-outline {
+            display: inline-flex; align-items: center; gap: 0.7rem;
+            background: transparent;
+            border: 1.5px solid rgba(255,255,255,0.3);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            text-decoration: none; cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
+
+        .hero-scroll {
+            position: absolute; bottom: 2.5rem;
+            left: 50%; transform: translateX(-50%);
+            z-index: 2; text-align: center;
+        }
+        .hero-scroll span {
+            display: block; font-size: 0.65rem;
+            letter-spacing: 0.3em; text-transform: uppercase;
+            color: rgba(255,255,255,0.4); margin-bottom: 0.5rem;
+        }
+        .scroll-line {
+            width: 1px; height: 40px;
+            background: rgba(255,255,255,0.2);
+            margin: 0 auto; position: relative; overflow: hidden;
+        }
+        .scroll-line::after {
+            content: ''; position: absolute;
+            top: -100%; left: 0; width: 100%; height: 100%;
+            background: var(--gold);
+            animation: scrollDown 2s ease-in-out infinite;
+        }
+        @keyframes scrollDown { 0% { top: -100%; } 100% { top: 100%; } }
+
+        /* ───── Stats Marquee ───── */
+        .stats-bar {
+            background: var(--dark);
+            padding: 1.2rem 0;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(200,164,85,0.15);
+        }
+        .marquee-inner {
+            display: flex; gap: 4rem;
+            animation: marquee 25s linear infinite;
+            width: max-content;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .stat-item {
+            display: flex; align-items: center; gap: 1rem;
+            white-space: nowrap;
+        }
+        .stat-item .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem; color: var(--gold);
+            font-weight: 700;
+        }
+        .stat-item .label {
+            font-size: 0.7rem; color: rgba(255,255,255,0.5);
+            letter-spacing: 0.15em; text-transform: uppercase;
+        }
+        .stat-divider {
+            width: 4px; height: 4px;
+            background: var(--gold); border-radius: 50%;
+            opacity: 0.3; align-self: center;
+        }
+
+        /* ───── Section Styles ───── */
+        .section { padding: 7rem 3rem; }
+        .section-dark { background: var(--dark); color: #fff; }
+        .section-cream { background: var(--cream); }
+        .section-white { background: #fff; }
+        .section-black { background: #050505; color: #fff; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-header {
+            max-width: 700px;
+            margin-bottom: 4rem;
+        }
+        .section-header.centered { text-align: center; margin-left: auto; margin-right: auto; }
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+        .section-header p {
+            font-size: 1.05rem; line-height: 1.8;
+            color: var(--text-light);
+        }
+        .section-dark .section-header p { color: rgba(255,255,255,0.5); }
+
+        /* ───── Flagship (Cotonou Escape) ───── */
+        .flagship-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .flagship-images {
+            position: relative;
+        }
+        .flagship-img-main {
+            width: 100%;
+            border-radius: 0;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            filter: brightness(0.95);
+        }
+        .flagship-img-float {
+            position: absolute;
+            bottom: -2rem; right: -2rem;
+            width: 200px; height: 260px;
+            object-fit: cover;
+            border: 6px solid var(--cream);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        .flagship-badge {
+            position: absolute;
+            top: 2rem; left: 2rem;
+            background: var(--gold);
+            color: var(--dark);
+            padding: 1rem 1.5rem;
+            text-align: center;
+        }
+        .flagship-badge .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem; font-weight: 700; line-height: 1;
+        }
+        .flagship-badge .txt {
+            font-size: 0.6rem; letter-spacing: 0.2em;
+            text-transform: uppercase; font-weight: 700;
+        }
+        .flagship-content h2 {
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+        }
+        .flagship-content .lead {
+            font-size: 1.1rem; line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+        .feature-list {
+            list-style: none; padding: 0;
+            display: flex; flex-direction: column;
+            gap: 1rem; margin-bottom: 2.5rem;
+        }
+        .feature-list li {
+            display: flex; align-items: flex-start; gap: 1rem;
+            font-size: 0.95rem; color: var(--text);
+        }
+        .feature-list li .icon {
+            width: 28px; height: 28px; min-width: 28px;
+            background: rgba(200,164,85,0.12);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); font-size: 0.7rem;
+            margin-top: 2px;
+        }
+
+        /* ───── WhatsApp CTA Button ───── */
+        .wa-btn {
+            display: inline-flex; align-items: center; gap: 0.8rem;
+            background: var(--whatsapp);
+            color: #fff; padding: 0.9rem 2rem;
+            text-decoration: none;
+            font-size: 0.8rem; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: none; cursor: pointer;
+        }
+        .wa-btn:hover { background: var(--whatsapp-dark); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37,211,102,0.3); }
+        .wa-btn i { font-size: 1.1rem; }
+
+        /* ───── Experiences Grid ───── */
+        .exp-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .exp-card {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            group: true;
+        }
+        .exp-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .exp-card:hover img { transform: scale(1.08); }
+        .exp-card-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(0deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.1) 50%, transparent 100%);
+            display: flex; flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            transition: background 0.3s ease;
+        }
+        .exp-card:hover .exp-card-overlay {
+            background: linear-gradient(0deg, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.1) 100%);
+        }
+        .exp-card-tag {
+            font-size: 0.6rem; letter-spacing: 0.3em;
+            text-transform: uppercase; color: var(--gold);
+            margin-bottom: 0.5rem; font-weight: 700;
+        }
+        .exp-card h3 {
+            font-size: 1.5rem; color: #fff;
+            margin-bottom: 0.5rem; line-height: 1.2;
+        }
+        .exp-card p {
+            font-size: 0.85rem; color: rgba(255,255,255,0.6);
+            line-height: 1.6; margin-bottom: 1rem;
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .exp-card:hover p { max-height: 100px; }
+        .exp-card .wa-link {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            color: var(--whatsapp); font-size: 0.75rem;
+            text-decoration: none; font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            opacity: 0; transform: translateY(10px);
+            transition: all 0.3s ease 0.1s;
+        }
+        .exp-card:hover .wa-link { opacity: 1; transform: translateY(0); }
+        .exp-card .wa-link:hover { color: #fff; }
+
+        /* ───── Services / What We Handle ───── */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 1px solid rgba(200,164,85,0.15);
+        }
+        .service-card {
+            padding: 3rem 2rem;
+            border-right: 1px solid rgba(200,164,85,0.15);
+            border-bottom: 1px solid rgba(200,164,85,0.15);
+            transition: all 0.3s ease;
+        }
+        .service-card:hover { background: rgba(200,164,85,0.05); }
+        .service-card:nth-child(4n) { border-right: none; }
+        .service-card .icon-wrap {
+            width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem; color: var(--gold);
+        }
+        .service-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #fff;
+        }
+        .service-card p {
+            font-size: 0.85rem; line-height: 1.7;
+            color: rgba(255,255,255,0.45);
+        }
+
+        /* ───── Gallery Mosaic ───── */
+        .gallery-mosaic {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 250px);
+            gap: 0.5rem;
+        }
+        .gallery-mosaic .g-item {
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-mosaic .g-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .gallery-mosaic .g-item:hover img { transform: scale(1.05); }
+        .gallery-mosaic .g-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+
+        /* ───── Testimonials ───── */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .testimonial-card {
+            background: #fff;
+            padding: 2.5rem;
+            border: 1px solid rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+        .testimonial-card .stars {
+            color: var(--gold); font-size: 0.8rem;
+            margin-bottom: 1.2rem;
+            display: flex; gap: 3px;
+        }
+        .testimonial-card .quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem; font-style: italic;
+            line-height: 1.7; color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+        .testimonial-card .author {
+            display: flex; align-items: center; gap: 1rem;
+        }
+        .testimonial-card .author-avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--gold); color: var(--dark);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700; font-size: 0.9rem;
+        }
+        .testimonial-card .author-name {
+            font-weight: 700; font-size: 0.9rem;
+        }
+        .testimonial-card .author-loc {
+            font-size: 0.75rem; color: var(--text-light);
+        }
+
+        /* ───── Team ───── */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .team-card { text-align: center; }
+        .team-card .team-img {
+            width: 220px; height: 280px;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            filter: grayscale(20%);
+            transition: all 0.4s ease;
+        }
+        .team-card:hover .team-img { filter: grayscale(0%); transform: translateY(-5px); }
+        .team-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+        .team-card .role {
+            font-size: 0.7rem; letter-spacing: 0.25em;
+            text-transform: uppercase; color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ───── CTA Banner ───── */
+        .cta-banner {
+            position: relative;
+            padding: 8rem 3rem;
+            text-align: center;
+            overflow: hidden;
+        }
+        .cta-banner-bg {
+            position: absolute; inset: 0;
+        }
+        .cta-banner-bg img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .cta-banner-overlay {
+            position: absolute; inset: 0;
+            background: rgba(10,10,10,0.75);
+        }
+        .cta-banner-content {
+            position: relative; z-index: 2;
+            max-width: 700px; margin: 0 auto;
+        }
+        .cta-banner h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: #fff; line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+        .cta-banner p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2.5rem; line-height: 1.7;
+        }
+        .cta-btns {
+            display: flex; gap: 1rem;
+            justify-content: center; flex-wrap: wrap;
+        }
+
+        /* ───── Contact Section ───── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        .contact-info .desc {
+            color: rgba(255,255,255,0.5);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+        }
+        .contact-channels {
+            display: flex; flex-direction: column; gap: 1.5rem;
+        }
+        .contact-item {
+            display: flex; align-items: center; gap: 1.2rem;
+        }
+        .contact-item .ci-icon {
+            width: 48px; height: 48px;
+            border: 1px solid rgba(200,164,85,0.3);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .contact-item .ci-text { display: flex; flex-direction: column; }
+        .contact-item .ci-label {
+            font-size: 0.65rem; letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 0.2rem;
+        }
+        .contact-item .ci-value {
+            color: #fff; font-size: 0.95rem; font-weight: 500;
+        }
+        .contact-item a { color: #fff; text-decoration: none; }
+        .contact-item a:hover { color: var(--gold); }
+
+        .contact-socials {
+            display: flex; gap: 1rem; margin-top: 2rem;
+        }
+        .contact-socials a {
+            width: 48px; height: 48px;
+            border: 1px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,0.6);
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .contact-socials a:hover {
+            border-color: var(--gold); color: var(--gold);
+            background: rgba(200,164,85,0.1);
+        }
+
+        .contact-form-wrap {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 3rem;
+        }
+        .contact-form-wrap h4 {
+            font-size: 1.3rem; color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .contact-form-wrap .form-sub {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.7rem; letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.5rem; font-weight: 600;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 0.9rem 1rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus { border-color: var(--gold); }
+        .form-group select option { background: var(--dark); color: #fff; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        /* ───── Footer ───── */
+        .footer {
+            background: var(--dark);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 3rem;
+            text-align: center;
+        }
+        .footer p {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 0.1em;
+        }
+
+        /* ───── Fixed WhatsApp Float ───── */
+        .wa-float {
+            position: fixed; bottom: 2rem; right: 2rem;
+            z-index: 900;
+            width: 60px; height: 60px;
+            background: var(--whatsapp);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 1.6rem;
+            text-decoration: none;
+            box-shadow: 0 4px 25px rgba(37,211,102,0.4);
+            transition: all 0.3s ease;
+            animation: waFloat 3s ease-in-out infinite;
+        }
+        .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 35px rgba(37,211,102,0.6); }
+        @keyframes waFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* ───── Scroll Reveal ───── */
+        .reveal {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ───── Responsive ───── */
+        @media (max-width: 1024px) {
+            .nav { padding: 1.2rem 1.5rem; }
+            .nav.scrolled { padding: 0.8rem 1.5rem; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .section { padding: 5rem 1.5rem; }
+            .flagship-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .flagship-img-float { display: none; }
+            .exp-grid { grid-template-columns: repeat(2, 1fr); }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .service-card:nth-child(2n) { border-right: none; }
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .team-grid { gap: 2rem; }
+            .gallery-mosaic { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 200px); }
+            .gallery-mosaic .g-item:nth-child(1) { grid-column: span 2; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
+            .exp-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .service-card { border-right: none !important; }
+            .team-grid { grid-template-columns: 1fr; }
+            .gallery-mosaic { grid-template-columns: 1fr; grid-template-rows: auto; }
+            .gallery-mosaic .g-item { aspect-ratio: 16/10; }
+            .gallery-mosaic .g-item:nth-child(1) { grid-column: span 1; grid-row: span 1; }
+            .form-row { grid-template-columns: 1fr; }
+            .hero-btns { flex-direction: column; align-items: center; }
+            .cta-btns { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
-<body class="bg-stone-50 text-gray-800">
+<body>
 
-    <nav class="absolute top-0 w-full z-50 py-6 px-6 lg:px-24 flex justify-between items-center text-white">
-        <div class="text-2xl font-bold tracking-wider">CLAREN DAVIS</div>
-        <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest">
-            <a href="#destinations" class="hover:text-amber-400 transition">Destinations</a>
-            <a href="#flagship" class="hover:text-amber-400 transition">Cotonou Escape</a>
-            <a href="#contact" class="hover:text-amber-400 transition">Contact</a>
+<!-- Preloader -->
+<div id="preloader">
+    <div class="loader-text">CLAREN DAVIS</div>
+</div>
+
+<!-- Cursor Glow -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- Navigation -->
+<nav class="nav" id="navbar">
+    <a href="#" class="nav-logo">
+        <span class="nav-logo-main">CLAREN DAVIS</span>
+        <span class="nav-logo-sub">Travel & Tour</span>
+    </a>
+    <div class="nav-links">
+        <a href="#experiences">Experiences</a>
+        <a href="#cotonou">Cotonou Escape</a>
+        <a href="#services">Services</a>
+        <a href="#team">Our Team</a>
+        <a href="#contact" class="nav-cta">Book Now</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#experiences" onclick="closeMenu()">Experiences</a>
+    <a href="#cotonou" onclick="closeMenu()">Cotonou Escape</a>
+    <a href="#services" onclick="closeMenu()">Services</a>
+    <a href="#team" onclick="closeMenu()">Our Team</a>
+    <a href="#contact" onclick="closeMenu()">Book Now</a>
+</div>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-bg">
+        <img src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?auto=format&fit=crop&w=1920&q=80" alt="African landscape">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-badge">
+            <div class="dot"></div>
+            <span>Now Booking 2026 Adventures</span>
         </div>
-        <a href="#contact" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-full text-sm font-semibold transition shadow-lg">Book Now</a>
-    </nav>
-
-    <header class="hero-bg h-screen flex items-center justify-center text-center px-4">
-        <div class="max-w-4xl mt-16">
-            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">Curating the Ultimate African Experience</h1>
-            <p class="text-lg md:text-2xl text-gray-200 mb-10 font-light">Make 2026 your year of adventure. Join our community to explore hidden gems, historical wonders, and unparalleled luxury.</p>
-            <a href="#flagship" class="bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-amber-500 hover:text-white transition duration-300 shadow-xl inline-block">Discover Our Tours</a>
+        <h1>Where Africa's <em>Finest</em> Experiences <span class="gold">Await You</span></h1>
+        <p class="hero-sub">We curate once-in-a-lifetime journeys across the African continent. From the historical wonders of Cotonou to the vibrant pulse of Lagos — your story starts here.</p>
+        <div class="hero-btns">
+            <a href="https://wa.me/2347062273466?text=Hi%20Claren%20Davis!%20I'm%20interested%20in%20booking%20a%20trip.%20Can%20you%20share%20more%20details?" class="btn-primary" target="_blank">
+                <i class="fab fa-whatsapp"></i> Book via WhatsApp
+            </a>
+            <a href="#experiences" class="btn-outline">
+                Explore Experiences <i class="fas fa-arrow-down" style="font-size:0.7rem"></i>
+            </a>
         </div>
-    </header>
+    </div>
+    <div class="hero-scroll">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
 
-    <section id="flagship" class="py-24 px-6 lg:px-24 bg-white">
-        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
-            <div class="lg:w-1/2 relative">
-                <img src="https://images.unsplash.com/photo-1528277342758-f1d7613953a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Cotonou Relaxation" class="rounded-2xl shadow-2xl">
-                <div class="absolute -bottom-8 -right-8 bg-amber-500 text-white p-6 rounded-xl shadow-lg hidden md:block">
-                    <p class="text-2xl font-bold">3-7 Days</p>
-                    <p class="text-sm uppercase tracking-wider">Pure Relaxation</p>
+<!-- Stats Marquee -->
+<div class="stats-bar">
+    <div class="marquee-inner">
+        <div class="stat-item"><span class="num">500+</span><span class="label">Happy Travelers</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="num">12+</span><span class="label">Destinations</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="num">5&#9733;</span><span class="label">Google Rating</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="num">50+</span><span class="label">Curated Experiences</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="num">3</span><span class="label">Countries</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="num">500+</span><span class="label">Happy Travelers</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="num">12+</span><span class="label">Destinations</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="num">5&#9733;</span><span class="label">Google Rating</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="num">50+</span><span class="label">Curated Experiences</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="num">3</span><span class="label">Countries</span></div>
+        <div class="stat-divider"></div>
+    </div>
+</div>
+
+<!-- ════════════ FLAGSHIP: COTONOU ESCAPE ════════════ -->
+<section id="cotonou" class="section section-cream">
+    <div class="container">
+        <div class="flagship-grid">
+            <div class="flagship-images reveal">
+                <img src="https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=900&q=80" alt="Cotonou coastal beauty" class="flagship-img-main">
+                <img src="https://images.unsplash.com/photo-1504150558240-0b4fd8946624?auto=format&fit=crop&w=400&q=80" alt="Hotel luxury" class="flagship-img-float">
+                <div class="flagship-badge">
+                    <div class="num">3-7</div>
+                    <div class="txt">Days of Bliss</div>
                 </div>
             </div>
-            <div class="lg:w-1/2">
-                <h2 class="text-4xl font-bold mb-6 text-gray-900">The Cotonou Escape: Decompress & Discover</h2>
-                <p class="text-gray-600 text-lg mb-6 leading-relaxed">Our flagship experience takes you to the heart of Benin Republic. We handle every detail—from exquisite accommodations and fine dining to guided historical tours. Stand in awe before the majestic <strong>Place de l'Amazone</strong>, an iconic tribute to the Dahomey Amazons, and let the coastal breeze wash your stress away.</p>
-                <ul class="space-y-4 mb-8">
-                    <li class="flex items-center text-gray-700"><i class="fas fa-check-circle text-amber-500 mr-3 text-xl"></i> All-inclusive itineraries & vendor sourcing</li>
-                    <li class="flex items-center text-gray-700"><i class="fas fa-check-circle text-amber-500 mr-3 text-xl"></i> Exquisite, secure hotel accommodations</li>
-                    <li class="flex items-center text-gray-700"><i class="fas fa-check-circle text-amber-500 mr-3 text-xl"></i> Guided visits to historical landmarks</li>
+            <div class="flagship-content reveal reveal-delay-2">
+                <span class="section-label">Our Flagship Experience</span>
+                <h2>The Cotonou Escape: Decompress, Discover & <em style="font-family:'Cormorant Garamond',serif;font-weight:400">Be Transformed</em></h2>
+                <p class="lead">Imagine 3 to 7 days of pure relaxation in Cotonou, Benin Republic. We handle every single detail — from exquisite beachfront accommodation and gourmet dining to guided historical tours that take your breath away. Stand before the majestic <strong>Place de l'Amazone</strong>, an iconic monument to the legendary Dahomey Amazons, and feel history come alive.</p>
+                <ul class="feature-list">
+                    <li>
+                        <span class="icon"><i class="fas fa-concierge-bell"></i></span>
+                        <span><strong>All-Inclusive Itineraries</strong> — Accommodation, feeding, transport, and guided tours fully handled</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fas fa-hotel"></i></span>
+                        <span><strong>Exquisite Accommodation</strong> — Handpicked hotels in the most secure and scenic environments</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fas fa-landmark"></i></span>
+                        <span><strong>Historical Immersion</strong> — Visit Place de l'Amazone, royal palaces, and cultural heritage sites</span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fas fa-camera"></i></span>
+                        <span><strong>Memories Captured</strong> — Professional photos and a special travel vlog of your journey</span>
+                    </li>
                 </ul>
-                <a href="#contact" class="border-2 border-gray-900 text-gray-900 px-8 py-3 rounded-full font-semibold hover:bg-gray-900 hover:text-white transition duration-300">Reserve Your Slot</a>
+                <a href="https://wa.me/2347062273466?text=Hi!%20I'm%20interested%20in%20the%20Cotonou%20Escape%20package.%20Can%20I%20get%20more%20details?" class="wa-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Reserve Your Cotonou Escape
+                </a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="destinations" class="py-24 px-6 lg:px-24 bg-stone-100">
-        <div class="max-w-7xl mx-auto text-center mb-16">
-            <h2 class="text-4xl font-bold text-gray-900 mb-4">Unforgettable Nigerian Escapes</h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">From inbound travel management to local weekend outings, we curate safe, premium, and fun-filled experiences across Nigeria.</p>
+<!-- ════════════ CURATED EXPERIENCES ════════════ -->
+<section id="experiences" class="section section-dark">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Curated Experiences</span>
+            <h2 style="color:#fff">Journeys That Stay <em style="font-family:'Cormorant Garamond',serif;font-weight:400">With You Forever</em></h2>
+            <p>From the roaring waterfalls of Osun State to the serene beaches of Lagos — every experience is handcrafted for magic, connection, and memories that last a lifetime.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:-translate-y-2 transition duration-300">
-                <img src="https://images.unsplash.com/photo-1533692328991-08159ff19fca?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Beach Camping" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
-                <div class="p-8">
-                    <h3 class="text-2xl font-bold mb-3">Beach Camping & Outings</h3>
-                    <p class="text-gray-600 mb-4">Bonfires, ocean waves, and amazing company. Perfect for weekend decompressions.</p>
+        <div class="exp-grid">
+            <!-- Card 1: Beach Camping -->
+            <div class="exp-card reveal">
+                <img src="https://images.unsplash.com/photo-1504851149312-7a075b496cc7?auto=format&fit=crop&w=800&q=80" alt="Beach camping at Tarkwa Bay">
+                <div class="exp-card-overlay">
+                    <span class="exp-card-tag">Lagos, Nigeria</span>
+                    <h3>Tarkwa Bay Beach Camping</h3>
+                    <p>Bonfires under the stars, ocean waves as your soundtrack, and incredible company. The ultimate Lagos beach escape.</p>
+                    <a href="https://wa.me/2347062273466?text=Hi!%20I%20want%20to%20book%20the%20Tarkwa%20Bay%20Beach%20Camping%20experience!" class="wa-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Book This Experience
+                    </a>
                 </div>
             </div>
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:-translate-y-2 transition duration-300">
-                <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Paint and Sip" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
-                <div class="p-8">
-                    <h3 class="text-2xl font-bold mb-3">Paint & Sip Experiences</h3>
-                    <p class="text-gray-600 mb-4">Unleash your creativity with curated artistic sessions, fine wine, and a vibrant community.</p>
+            <!-- Card 2: Paint & Sip -->
+            <div class="exp-card reveal reveal-delay-1">
+                <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=800&q=80" alt="Paint and Sip">
+                <div class="exp-card-overlay">
+                    <span class="exp-card-tag">Creative Experience</span>
+                    <h3>Paint & Sip Nights</h3>
+                    <p>Unleash your inner artist with curated painting sessions, fine wine, great music, and a community of creative souls.</p>
+                    <a href="https://wa.me/2347062273466?text=Hi!%20I'm%20interested%20in%20the%20Paint%20%26%20Sip%20experience!" class="wa-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Book This Experience
+                    </a>
                 </div>
             </div>
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:-translate-y-2 transition duration-300">
-                <img src="https://images.unsplash.com/photo-1432405972618-c60b024cb8cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Waterfalls" class="w-full h-64 object-cover group-hover:scale-105 transition duration-500">
-                <div class="p-8">
-                    <h3 class="text-2xl font-bold mb-3">Majestic Waterfalls</h3>
-                    <p class="text-gray-600 mb-4">Explore nature's wonders across Nigerian states with safe, guided, and memorable tours.</p>
+            <!-- Card 3: Erin Ijesa Waterfalls -->
+            <div class="exp-card reveal reveal-delay-2">
+                <img src="https://images.unsplash.com/photo-1432405972618-c60b024cb8cb?auto=format&fit=crop&w=800&q=80" alt="Erin Ijesa Waterfalls">
+                <div class="exp-card-overlay">
+                    <span class="exp-card-tag">Osun State, Nigeria</span>
+                    <h3>Erin Ijesa Waterfalls</h3>
+                    <p>Seven stunning cascades surrounded by lush tropical forest. Hike, swim, and reconnect with nature's raw beauty.</p>
+                    <a href="https://wa.me/2347062273466?text=Hi!%20I%20want%20to%20join%20the%20Erin%20Ijesa%20Waterfalls%20trip!" class="wa-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Book This Experience
+                    </a>
+                </div>
+            </div>
+            <!-- Card 4: Weekend Outings -->
+            <div class="exp-card reveal">
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80" alt="Weekend outings">
+                <div class="exp-card-overlay">
+                    <span class="exp-card-tag">Every Weekend</span>
+                    <h3>Weekend Outings</h3>
+                    <p>Curated weekend escapes to decompress. New venues, new cities, new friends. Life is too short for boring weekends.</p>
+                    <a href="https://wa.me/2347062273466?text=Hi!%20I'd%20love%20to%20join%20a%20weekend%20outing!" class="wa-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Book This Experience
+                    </a>
+                </div>
+            </div>
+            <!-- Card 5: Benin Historical -->
+            <div class="exp-card reveal reveal-delay-1">
+                <img src="https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?auto=format&fit=crop&w=800&q=80" alt="Benin Republic historical places">
+                <div class="exp-card-overlay">
+                    <span class="exp-card-tag">Benin Republic</span>
+                    <h3>Historical Benin Tour</h3>
+                    <p>Walk through the cradle of the Dahomey Kingdom. Visit sacred temples, royal palaces, and the legendary Place de l'Amazone.</p>
+                    <a href="https://wa.me/2347062273466?text=Hi!%20I'm%20interested%20in%20the%20Benin%20Republic%20historical%20tour!" class="wa-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Book This Experience
+                    </a>
+                </div>
+            </div>
+            <!-- Card 6: Cross-Africa -->
+            <div class="exp-card reveal reveal-delay-2">
+                <img src="https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?auto=format&fit=crop&w=800&q=80" alt="Cross-border African travel">
+                <div class="exp-card-overlay">
+                    <span class="exp-card-tag">West Africa</span>
+                    <h3>Cross-Border Adventures</h3>
+                    <p>Ghana, Cote d'Ivoire, Togo & beyond. We curate seamless multi-country journeys across the African continent.</p>
+                    <a href="https://wa.me/2347062273466?text=Hi!%20I'd%20love%20to%20know%20about%20cross-border%20travel%20packages!" class="wa-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Book This Experience
+                    </a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="py-24 px-6 lg:px-24 bg-white text-center">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold text-gray-900 mb-12">What Our Travelers Say</h2>
-            <div class="bg-stone-50 p-10 rounded-3xl shadow-sm border border-stone-100 relative">
-                <i class="fas fa-quote-left text-4xl text-amber-300 absolute top-6 left-6 opacity-50"></i>
-                <p class="text-xl italic text-gray-700 mb-6 relative z-10">"The trip to Cotonou curated by Claren Davis was life-changing. Standing in front of the Place de l'Amazone was breathtaking, and the hotel they secured was top-notch. Can't wait for my 2026 trip!"</p>
-                <div class="font-bold text-gray-900">- Sarah O., Google Reviews</div>
-                <div class="flex justify-center mt-3 text-amber-400">
+<!-- ════════════ SERVICES ════════════ -->
+<section id="services" class="section section-black">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">What We Handle</span>
+            <h2 style="color:#fff">You Enjoy. <em style="font-family:'Cormorant Garamond',serif;font-weight:400">We Handle Everything.</em></h2>
+            <p>Whether you're flying into Nigeria or exploring West Africa, we take care of every detail so you can focus on living your best life.</p>
+        </div>
+        <div class="services-grid reveal">
+            <div class="service-card">
+                <div class="icon-wrap"><i class="fas fa-route"></i></div>
+                <h4>Custom Itineraries</h4>
+                <p>Personalised day-by-day travel plans designed around your interests, pace, and budget. No cookie-cutter trips here.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-wrap"><i class="fas fa-hotel"></i></div>
+                <h4>Premium Accommodation</h4>
+                <p>We secure top-rated, verified hotels in the safest neighbourhoods. Your comfort and security are non-negotiable.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-wrap"><i class="fas fa-utensils"></i></div>
+                <h4>Dining & Experiences</h4>
+                <p>From local delicacies to fine dining, we curate the best feeding experiences at every stop on your journey.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-wrap"><i class="fas fa-handshake"></i></div>
+                <h4>Vendor Sourcing</h4>
+                <p>Need a reliable driver, guide, photographer, or anything else? We connect you with vetted, trusted local vendors.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-wrap"><i class="fas fa-plane-arrival"></i></div>
+                <h4>Inbound Travel Support</h4>
+                <p>Flying in from Ghana, Cote d'Ivoire, or anywhere? Airport pickup, orientation, and full concierge service awaits.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-wrap"><i class="fas fa-camera-retro"></i></div>
+                <h4>Photo & Vlog Coverage</h4>
+                <p>Professional documentation of your journey — stunning photos and travel vlogs you'll cherish and share forever.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-wrap"><i class="fas fa-shield-alt"></i></div>
+                <h4>Safety & Security</h4>
+                <p>Every location is pre-vetted. Every route is planned. Travel with the peace of mind that you're in expert hands.</p>
+            </div>
+            <div class="service-card">
+                <div class="icon-wrap"><i class="fas fa-users"></i></div>
+                <h4>Community & Connection</h4>
+                <p>Join a tribe of adventurous, like-minded people. Our group trips create friendships that last far beyond the journey.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ GALLERY ════════════ -->
+<section class="section section-cream" style="padding-bottom:4rem">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Gallery</span>
+            <h2>Moments That <em style="font-family:'Cormorant Garamond',serif;font-weight:400">Speak Louder</em></h2>
+        </div>
+        <div class="gallery-mosaic reveal">
+            <div class="g-item">
+                <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1000&q=80" alt="African sunset">
+            </div>
+            <div class="g-item">
+                <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=600&q=80" alt="Beach vibes">
+            </div>
+            <div class="g-item">
+                <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=600&q=80" alt="Community travel">
+            </div>
+            <div class="g-item">
+                <img src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?auto=format&fit=crop&w=600&q=80" alt="Tropical paradise">
+            </div>
+            <div class="g-item">
+                <img src="https://images.unsplash.com/photo-1502920514313-52581002a659?auto=format&fit=crop&w=600&q=80" alt="Cultural experience">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ TESTIMONIALS ════════════ -->
+<section class="section section-white">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Testimonials</span>
+            <h2>Words From Our <em style="font-family:'Cormorant Garamond',serif;font-weight:400">Travelers</em></h2>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card reveal">
+                <div class="stars">
                     <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <footer id="contact" class="bg-gray-900 text-white py-16 px-6 lg:px-24">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            <div>
-                <h3 class="text-2xl font-bold mb-6">CLAREN DAVIS</h3>
-                <p class="text-gray-400 text-sm leading-relaxed mb-6">Curating travel experiences across the African continent. Let's make your 2026 fun-filled with amazing experiences and amazing people.</p>
-            </div>
-            <div>
-                <h4 class="text-lg font-bold mb-6 text-amber-500">Contact Us</h4>
-                <ul class="space-y-4 text-gray-300 text-sm">
-                    <li><i class="fas fa-envelope mr-2"></i> clarendavisgb@gmail.com</li>
-                    <li><i class="fas fa-phone mr-2"></i> +234 706 227 3466</li>
-                    <li><i class="fas fa-phone mr-2"></i> +234 905 490 2036</li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-lg font-bold mb-6 text-amber-500">Socials</h4>
-                <div class="flex space-x-4">
-                    <a href="https://www.instagram.com/clarendavis/?hl=en" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-amber-500 transition"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www./TikTok.com/@clarendavisgb" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-amber-500 transition"><i class="fab fa-tiktok"></i></a>
+                <p class="quote">"The Cotonou trip was life-changing. Standing before the Place de l'Amazone gave me chills. The hotel was world-class, the food was incredible, and Claren Davis handled everything flawlessly. I didn't have to think about a single thing."</p>
+                <div class="author">
+                    <div class="author-avatar">S</div>
+                    <div>
+                        <div class="author-name">Sarah O.</div>
+                        <div class="author-loc">Lagos, Nigeria</div>
+                    </div>
                 </div>
             </div>
-            <div>
-                <h4 class="text-lg font-bold mb-6 text-amber-500">Ready for 2026?</h4>
-                <a href="mailto:clarendavisgb@gmail.com" class="block text-center bg-amber-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-amber-600 transition shadow-lg">Email Us to Book</a>
+            <div class="testimonial-card reveal reveal-delay-1">
+                <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="quote">"I flew in from Accra and was worried about logistics. Claren Davis sorted everything — airport pickup, an amazing hotel in Victoria Island, and a full Lagos experience itinerary. This is premium travel done right."</p>
+                <div class="author">
+                    <div class="author-avatar">K</div>
+                    <div>
+                        <div class="author-name">Kofi A.</div>
+                        <div class="author-loc">Accra, Ghana</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal reveal-delay-2">
+                <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="quote">"The beach camping at Tarkwa Bay was absolutely magical. The paint and sip session the following week? Even better. I've made lifelong friends through these experiences. Claren Davis is building something special."</p>
+                <div class="author">
+                    <div class="author-avatar">T</div>
+                    <div>
+                        <div class="author-name">Tunde M.</div>
+                        <div class="author-loc">Abuja, Nigeria</div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
-            &copy; 2026 Claren Davis Travel and Tour. All rights reserved.
+    </div>
+</section>
+
+<!-- ════════════ TEAM ════════════ -->
+<section id="team" class="section section-cream">
+    <div class="container">
+        <div class="section-header centered reveal">
+            <span class="section-label">Meet The Team</span>
+            <h2>The Visionaries Behind <em style="font-family:'Cormorant Garamond',serif;font-weight:400">Your Adventures</em></h2>
+            <p>A passionate duo committed to redefining travel experiences across Africa. We don't just plan trips — we craft transformative journeys.</p>
         </div>
-    </footer>
+        <div class="team-grid">
+            <div class="team-card reveal">
+                <img src="https://drive.google.com/thumbnail?id=1HppO4lFNqhzN-vmQEkaz0oFE2HngU-CZ&sz=w600" alt="Frederic Idowu" class="team-img">
+                <h4>Frederic Idowu</h4>
+                <div class="role">Director of Growth & Innovation</div>
+            </div>
+            <div class="team-card reveal reveal-delay-2">
+                <img src="https://drive.google.com/thumbnail?id=1TCIAZz7FkEZMZkT0nms-_ymx1M8iYFEJ&sz=w600" alt="Mabel Eniola Owoseni" class="team-img">
+                <h4>Mabel Eniola Owoseni</h4>
+                <div class="role">Chief Experience Officer</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ CTA BANNER ════════════ -->
+<section class="cta-banner">
+    <div class="cta-banner-bg">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80" alt="Beautiful beach sunset">
+    </div>
+    <div class="cta-banner-overlay"></div>
+    <div class="cta-banner-content reveal">
+        <span class="section-label">Your 2026 Starts Here</span>
+        <h2>Ready to Make 2026 <em style="font-family:'Cormorant Garamond',serif;font-weight:400">Unforgettable?</em></h2>
+        <p>Join our community of adventurers. Let us curate your year with amazing experiences, incredible destinations, and friendships that last a lifetime. Slots are limited — your next adventure is one message away.</p>
+        <div class="cta-btns">
+            <a href="https://wa.me/2347062273466?text=Hi%20Claren%20Davis!%20I%20want%20to%20join%20the%20community%20and%20book%20my%202026%20adventures!" class="btn-primary" target="_blank">
+                <i class="fab fa-whatsapp"></i> Join via WhatsApp
+            </a>
+            <a href="https://www.instagram.com/clarendavis/?hl=en" class="btn-outline" target="_blank">
+                <i class="fab fa-instagram"></i> Follow Our Journey
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════ CONTACT ════════════ -->
+<section id="contact" class="section section-dark" style="padding-bottom:3rem">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-info reveal">
+                <span class="section-label">Get In Touch</span>
+                <h3 style="color:#fff">Let's Plan Your <em style="font-family:'Cormorant Garamond',serif;font-weight:400">Next Adventure</em></h3>
+                <p class="desc">Whether you're ready to book or just curious about what we offer, reach out. We respond fast, we plan faster, and we deliver experiences that exceed expectations.</p>
+                <div class="contact-channels">
+                    <div class="contact-item">
+                        <div class="ci-icon"><i class="fab fa-whatsapp"></i></div>
+                        <div class="ci-text">
+                            <span class="ci-label">WhatsApp</span>
+                            <a href="https://wa.me/2347062273466" target="_blank" class="ci-value">+234 706 227 3466</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="ci-icon"><i class="fas fa-phone"></i></div>
+                        <div class="ci-text">
+                            <span class="ci-label">Call Us</span>
+                            <a href="tel:+2349054902036" class="ci-value">+234 905 490 2036</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="ci-text">
+                            <span class="ci-label">Email</span>
+                            <a href="mailto:clarendavisgb@gmail.com" class="ci-value">clarendavisgb@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-socials">
+                    <a href="https://www.instagram.com/clarendavis/?hl=en" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@clarendavisgb" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="mailto:clarendavisgb@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://wa.me/2347062273466" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="contact-form-wrap reveal reveal-delay-2">
+                <h4>Quick Enquiry</h4>
+                <p class="form-sub">Fill this out and we'll reach you within 24 hours.</p>
+                <form id="contactForm" onsubmit="handleFormSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fname">Full Name</label>
+                            <input type="text" id="fname" name="fname" placeholder="Your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone / WhatsApp</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+234 ..." required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="you@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="interest">Interested In</label>
+                        <select id="interest" name="interest">
+                            <option value="">Select an experience...</option>
+                            <option value="cotonou">Cotonou Escape (3-7 Days)</option>
+                            <option value="beach">Beach Camping — Tarkwa Bay</option>
+                            <option value="paint">Paint & Sip Experience</option>
+                            <option value="waterfalls">Erin Ijesa Waterfalls Trip</option>
+                            <option value="weekend">Weekend Outings</option>
+                            <option value="benin">Benin Republic Historical Tour</option>
+                            <option value="inbound">Inbound Travel to Nigeria</option>
+                            <option value="custom">Custom Trip / Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Tell us what you have in mind..."></textarea>
+                    </div>
+                    <button type="submit" class="wa-btn" style="width:100%;justify-content:center;margin-top:0.5rem">
+                        <i class="fab fa-whatsapp"></i> Send Enquiry via WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2026 Claren Davis Travel & Tour. All rights reserved. Curating Africa's finest experiences.</p>
+</footer>
+
+<!-- Fixed WhatsApp Float Button -->
+<a href="https://wa.me/2347062273466?text=Hi%20Claren%20Davis!%20I%20found%20your%20website%20and%20I'm%20interested%20in%20your%20travel%20experiences!" class="wa-float" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+    // Preloader
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('preloader').classList.add('hidden');
+        }, 1200);
+    });
+
+    // Cursor glow
+    const glow = document.getElementById('cursorGlow');
+    document.addEventListener('mousemove', (e) => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    });
+
+    // Navbar scroll
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    });
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Scroll reveal
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Form → WhatsApp
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        const name = document.getElementById('fname').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const interest = document.getElementById('interest').value;
+        const message = document.getElementById('message').value;
+
+        let text = `Hi Claren Davis! I'd like to make an enquiry.\n\n`;
+        text += `*Name:* ${name}\n`;
+        text += `*Phone:* ${phone}\n`;
+        if (email) text += `*Email:* ${email}\n`;
+        if (interest) text += `*Interested In:* ${interest}\n`;
+        if (message) text += `*Message:* ${message}\n`;
+
+        const encoded = encodeURIComponent(text);
+        window.open(`https://wa.me/2347062273466?text=${encoded}`, '_blank');
+    }
+</script>
 
 </body>
 </html>
